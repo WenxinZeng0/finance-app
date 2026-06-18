@@ -10,21 +10,17 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>个人财务</title>
-
 <style>
-/* ── Reset & Base ── */
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
   --navy:#1a1a2e;--blue:#2d6bcc;--green:#2e7d32;--red:#c62828;--amber:#b45309;
   --gold:#e8a900;--bg:#f4f5f7;--card:#fff;--text:#1a1a2e;--muted:#6b7280;
-  --border:#e5e7eb;--radius:12px;--safe-top:env(safe-area-inset-top);
-  --safe-bot:env(safe-area-inset-bottom);
+  --border:#e5e7eb;--radius:12px;
+  --safe-top:env(safe-area-inset-top);--safe-bot:env(safe-area-inset-bottom);
 }
 body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
   background:var(--bg);color:var(--text);min-height:100dvh;
   padding-bottom:calc(72px + var(--safe-bot));overflow-x:hidden}
-
-/* ── Header ── */
 #header{background:var(--navy);color:#fff;
   padding:calc(16px + var(--safe-top)) 20px 0;position:sticky;top:0;z-index:100}
 #header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
@@ -38,112 +34,87 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
   padding:10px 16px;font-size:13px;font-weight:500;cursor:pointer;
   border-radius:8px 8px 0 0;white-space:nowrap;transition:all .15s}
 .tab.active{background:#fff;color:var(--navy);font-weight:700}
-
-/* ── Content ── */
 #content{padding:16px}
 .page{display:none}.page.active{display:block}
-
-/* ── Cards ── */
 .card{background:var(--card);border-radius:var(--radius);padding:16px;
   margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 .card-title{font-size:13px;font-weight:700;color:var(--muted);
   margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px}
-
-/* ── Stat Grid ── */
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.stat{background:var(--card);border-radius:10px;padding:12px;
-  box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.stat{background:var(--card);border-radius:10px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 .stat-label{font-size:11px;color:var(--muted);margin-bottom:2px}
 .stat-value{font-size:19px;font-weight:700;color:var(--text)}
-.stat-value.green{color:var(--green)}
-.stat-value.red{color:var(--red)}
+.stat-value.green{color:var(--green)}.stat-value.red{color:var(--red)}
 .stat-sub{font-size:11px;color:#9ca3af;margin-top:1px}
-
-/* ── Forms ── */
 .form-group{margin-bottom:12px}
-.form-group label{display:block;font-size:12px;font-weight:600;
-  color:var(--muted);margin-bottom:5px}
-.form-group input,.form-group select,.form-group textarea{
-  width:100%;padding:10px 12px;border:1.5px solid var(--border);
+.form-group label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px}
+.form-group input,.form-group select{width:100%;padding:10px 12px;border:1.5px solid var(--border);
   border-radius:8px;font-size:15px;background:#fff;color:var(--text);
   -webkit-appearance:none;appearance:none;transition:border-color .15s}
-.form-group input:focus,.form-group select:focus{
-  outline:none;border-color:var(--blue)}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--blue)}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-
-/* ── Buttons ── */
 .btn{width:100%;padding:14px;border:none;border-radius:10px;
   font-size:15px;font-weight:600;cursor:pointer;transition:all .15s}
 .btn-primary{background:var(--navy);color:#fff}
 .btn-primary:active{transform:scale(0.98);opacity:.9}
-.btn-danger{background:#fef2f2;color:var(--red);border:1.5px solid #fecaca}
 .btn-ghost{background:transparent;color:var(--blue);border:1.5px dashed var(--border)}
-
-/* ── Transaction List ── */
 .tx-item{display:flex;justify-content:space-between;align-items:center;
   padding:11px 0;border-bottom:1px solid var(--border)}
 .tx-item:last-child{border-bottom:none}
 .tx-left{flex:1;min-width:0}
 .tx-cat{font-size:13px;font-weight:600;color:var(--text)}
 .tx-meta{font-size:11px;color:var(--muted);margin-top:1px}
-.tx-desc{font-size:12px;color:#9ca3af;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tx-amount{font-size:15px;font-weight:700;flex-shrink:0;margin-left:12px}
-.tx-amount.neg{color:var(--green)}
-
-/* ── Progress Bar ── */
+.tx-amount.income-color{color:var(--blue)}
 .progress-wrap{margin-bottom:14px}
-.progress-label{display:flex;justify-content:space-between;
-  font-size:12px;margin-bottom:4px}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
 .progress-bar{height:10px;background:#e5e7eb;border-radius:5px;overflow:hidden}
 .progress-fill{height:100%;border-radius:5px;transition:width .4s}
-
-/* ── Budget row ── */
 .budget-row{display:grid;grid-template-columns:1fr 80px 70px;
   gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)}
-.budget-row:last-child{border-bottom:none;font-weight:700}
 .budget-input{padding:4px 8px;border:1.5px solid var(--border);
   border-radius:6px;font-size:13px;text-align:right;width:100%}
-
-/* ── Credit card ── */
+/* Credit card */
 .cc-card{background:var(--card);border-radius:var(--radius);padding:14px;
-  margin-bottom:12px;border-left:4px solid #ccc;
-  box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.cc-name{font-size:15px;font-weight:700;margin-bottom:8px}
-.cc-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  margin-bottom:12px;border-left:4px solid #ccc;box-shadow:0 1px 3px rgba(0,0,0,.06);cursor:pointer}
+.cc-header{display:flex;justify-content:space-between;align-items:center}
+.cc-name{font-size:15px;font-weight:700}
+.cc-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
 .cc-field{font-size:11px;color:var(--muted)}
 .cc-val{font-size:13px;font-weight:600;color:var(--text)}
-.cc-badge{font-size:11px;font-weight:600;padding:3px 8px;
-  border-radius:20px;display:inline-block;margin-top:6px}
+.cc-badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;display:inline-block}
 .badge-warn{background:#fef3c7;color:#92400e}
 .badge-ok{background:#d1fae5;color:#065f46}
 .badge-urgent{background:#fee2e2;color:#991b1b}
-
-/* ── Stock scenario ── */
+.cc-detail{display:none;margin-top:10px;border-top:1px solid var(--border);padding-top:8px}
+.cc-detail.open{display:block}
+.cc-tx-row{display:grid;grid-template-columns:44px 1fr 1fr auto;gap:6px;
+  align-items:center;padding:5px 0;border-bottom:1px solid #f5f5f5;font-size:12px}
+.cc-tx-row:last-child{border-bottom:none}
+/* Scenario */
 .scenario-row{display:grid;grid-template-columns:60px 52px 46px 1fr;
   gap:6px;align-items:center;margin-bottom:8px}
-.sc-input{padding:4px 6px;border:1.5px solid var(--border);
-  border-radius:6px;font-size:12px;width:100%}
-
-/* ── Toast ── */
+.sc-input{padding:4px 6px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;width:100%}
+/* Config page */
+.cfg-section{background:var(--card);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.cfg-section-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:12px}
+.cfg-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)}
+.cfg-row:last-child{border-bottom:none}
+.cfg-label{font-size:13px;color:var(--text)}
+.cfg-sublabel{font-size:11px;color:var(--muted)}
+.cfg-value{font-size:14px;font-weight:700}
+.cfg-value.green{color:var(--green)}.cfg-value.red{color:var(--red)}.cfg-value.amber{color:var(--amber)}
+.cfg-bar-wrap{margin-top:4px}
+.cfg-bar{height:6px;background:#e5e7eb;border-radius:3px;overflow:hidden;margin-top:3px}
+.cfg-bar-fill{height:100%;border-radius:3px}
+/* Toast */
 #toast{position:fixed;bottom:calc(90px + var(--safe-bot));left:50%;
   transform:translateX(-50%) translateY(20px);
   background:var(--navy);color:#fff;padding:10px 20px;border-radius:20px;
   font-size:13px;font-weight:600;opacity:0;transition:all .25s;z-index:999;
   pointer-events:none;white-space:nowrap}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* ── Bottom Nav ── */
-#nav{position:fixed;bottom:0;left:0;right:0;
-  background:#fff;border-top:1px solid var(--border);
-  display:flex;padding-bottom:var(--safe-bot);z-index:100;
-  box-shadow:0 -2px 12px rgba(0,0,0,.06)}
-.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;
-  padding:10px 0;background:none;border:none;cursor:pointer;
-  color:var(--muted);font-size:10px;gap:3px;transition:color .15s}
-.nav-btn.active{color:var(--blue)}
-.nav-icon{font-size:22px;line-height:1}
-
-/* ── Setup screen ── */
+/* Setup */
 #setup{position:fixed;inset:0;background:var(--navy);color:#fff;
   display:flex;flex-direction:column;justify-content:center;
   align-items:center;padding:32px;z-index:9999;text-align:center}
@@ -154,39 +125,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
 #setup .setup-btn{width:100%;padding:14px;background:var(--blue);color:#fff;
   border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px}
 #setup .setup-note{font-size:12px;color:rgba(255,255,255,.5);line-height:1.5}
-
-/* ── Section divider ── */
-.section-head{font-size:12px;font-weight:700;color:var(--muted);
-  text-transform:uppercase;letter-spacing:.4px;margin:18px 0 8px}
-
-/* ── Chart bars (pure CSS) ── */
+/* Bar chart */
 .bar-chart{display:flex;flex-direction:column;gap:8px}
 .bar-row{display:flex;align-items:center;gap:8px}
 .bar-label{font-size:11px;color:var(--muted);width:60px;text-align:right;flex-shrink:0}
 .bar-track{flex:1;height:18px;background:#f3f4f6;border-radius:4px;overflow:hidden;position:relative}
-.bar-fill{height:100%;border-radius:4px;transition:width .4s;display:flex;align-items:center;justify-content:flex-end;padding-right:6px}
+.bar-fill{height:100%;border-radius:4px;transition:width .4s;
+  display:flex;align-items:center;justify-content:flex-end;padding-right:6px}
 .bar-fill span{font-size:10px;font-weight:600;color:#fff}
 .bar-over{background:#fee2e2}
-.bar-fill-over{background:var(--red)}
-.bar-fill-ok{background:var(--blue)}
-.bar-budget-line{position:absolute;top:0;bottom:0;width:2px;background:rgba(0,0,0,.15)}
+.bar-fill-over{background:var(--red)}.bar-fill-ok{background:var(--blue)}
+/* Income badge */
+.income-badge{background:#eff6ff;color:#1d4ed8;font-size:11px;font-weight:600;
+  padding:2px 7px;border-radius:10px;margin-left:6px;vertical-align:middle}
 </style>
 </head>
 <body>
 
-<!-- Setup Screen -->
 <div id="setup">
   <div style="font-size:48px;margin-bottom:16px">💰</div>
   <h2>个人财务</h2>
-  <p>首次使用需要连接 GitHub 数据存储。<br>你的数据会保存在你的私有仓库中，完全私密。</p>
+  <p>首次使用需要连接 GitHub 数据存储。<br>你的数据保存在私有仓库，完全私密。</p>
   <input id="setup-token" type="password" placeholder="GitHub Personal Access Token" autocomplete="off">
-  <input id="setup-owner" type="text" placeholder="GitHub 用户名（如：johndoe）" autocomplete="off">
-  <input id="setup-repo" type="text" placeholder="私有仓库名（如：my-finance-data）" autocomplete="off" value="my-finance-data">
+  <input id="setup-owner" type="text" placeholder="GitHub 用户名" autocomplete="off">
+  <input id="setup-repo"  type="text" placeholder="私有仓库名（如：my-finance-data）" autocomplete="off" value="my-finance-data">
   <button class="setup-btn" onclick="saveSetup()">开始使用</button>
-  <p class="setup-note">Token 只存在你的手机本地，不会上传到任何服务器。<br>如何获取 Token 请看 README.md</p>
+  <p class="setup-note">Token 只存在你的手机本地，不上传任何服务器。</p>
 </div>
 
-<!-- Header -->
 <div id="header">
   <div id="header-top">
     <h1>💰 财务</h1>
@@ -198,7 +164,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
     <button class="tab" onclick="showPage('cards')">账单</button>
     <button class="tab" onclick="showPage('savings')">存款</button>
     <button class="tab" onclick="showPage('stocks')">股市</button>
-    <button class="tab" onclick="showPage('buffer')">Buffer</button>
+    <button class="tab" onclick="showPage('config')">配置</button>
     <button class="tab" onclick="showPage('budget')">预算</button>
   </div>
 </div>
@@ -219,12 +185,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
       <div class="stat-sub">剩余</div>
     </div>
   </div>
-
   <div class="card">
     <div class="card-title">分类消费 vs 预算</div>
     <div class="bar-chart" id="spending-bars"></div>
   </div>
-
   <div class="card">
     <div class="card-title">最近记录</div>
     <div id="recent-list"></div>
@@ -233,8 +197,41 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
 
 <!-- ══ ENTRY ══ -->
 <div id="page-entry" class="page">
+  <!-- 收入录入 -->
   <div class="card">
-    <div class="card-title">快速录入</div>
+    <div class="card-title">录入收入</div>
+    <div id="paycheck-notice" style="background:#eff6ff;border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:13px;color:#1d4ed8;line-height:1.6"></div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>日期</label>
+        <input type="date" id="inc-date">
+      </div>
+      <div class="form-group">
+        <label>金额（$）</label>
+        <input type="number" id="inc-amount" placeholder="0.00" step="0.01" inputmode="decimal">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>收入类型</label>
+      <select id="inc-type">
+        <option value="薪资">薪资（Biweekly）</option>
+        <option value="股票分红">股票分红</option>
+        <option value="定存利息">定存利息</option>
+        <option value="二手收入">二手物品售出</option>
+        <option value="副业收入">副业收入</option>
+        <option value="其他收入">其他收入</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>备注</label>
+      <input type="text" id="inc-desc" placeholder="可选">
+    </div>
+    <button class="btn btn-primary" onclick="addIncome()">＋ 保存收入</button>
+  </div>
+
+  <!-- 支出录入 -->
+  <div class="card">
+    <div class="card-title">录入支出</div>
     <div class="form-row">
       <div class="form-group">
         <label>日期</label>
@@ -272,7 +269,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
         </select>
       </div>
     </div>
-    <button class="btn btn-primary" onclick="addTransaction()">＋ 保存记录</button>
+    <button class="btn btn-primary" onclick="addTransaction()">＋ 保存支出</button>
   </div>
 
   <div class="card">
@@ -290,22 +287,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
 <div id="page-savings" class="page">
   <div class="stat-grid">
     <div class="stat">
-      <div class="stat-label">现金总余额</div>
-      <div class="stat-value green" id="sv-cash">$0</div>
-      <div class="stat-sub">所有账户</div>
+      <div class="stat-label">现金储蓄</div>
+      <div class="stat-value green" id="sv-cash-saving">$0</div>
+      <div class="stat-sub">收入 − 储蓄卡支出</div>
     </div>
     <div class="stat">
-      <div class="stat-label">本月实际储蓄</div>
-      <div class="stat-value" id="sv-saved">$0</div>
-      <div class="stat-sub" id="sv-target-label">目标 —</div>
+      <div class="stat-label">实际储蓄</div>
+      <div class="stat-value" id="sv-real-saving">$0</div>
+      <div class="stat-sub">收入 − 全部支出</div>
     </div>
+  </div>
+  <div class="stat-grid">
+    <div class="stat">
+      <div class="stat-label">本月总收入</div>
+      <div class="stat-value" id="sv-income">$0</div>
+      <div class="stat-sub" id="sv-income-sub">—</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">现金账户总余额</div>
+      <div class="stat-value green" id="sv-total-cash">$0</div>
+      <div class="stat-sub">所有账户</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">本月收入明细</div>
+    <div id="sv-income-list"></div>
   </div>
 
   <div class="card">
     <div class="card-title">账户余额</div>
     <div id="accounts-list"></div>
   </div>
-
   <div class="card">
     <div class="card-title">编辑账户余额</div>
     <div id="accounts-edit"></div>
@@ -322,7 +335,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
         style="font-size:22px;font-weight:700;border:none;padding:4px 0;outline:none;box-shadow:none">
     </div>
   </div>
-
   <div class="stat-grid">
     <div class="stat">
       <div class="stat-label">期望总值</div>
@@ -333,16 +345,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
       <div class="stat-value green" id="st-ret">+$0</div>
     </div>
   </div>
-
   <div class="card">
     <div class="card-title">持仓明细</div>
     <div id="holdings-list"></div>
     <button class="btn btn-ghost" style="margin-top:10px" onclick="addHolding()">＋ 添加持仓</button>
   </div>
-
   <div class="card">
     <div class="card-title" id="sc-title">情景分析</div>
-    <div style="font-size:11px;color:var(--muted);margin-bottom:10px;display:grid;grid-template-columns:60px 52px 46px 1fr;gap:6px">
+    <div style="display:grid;grid-template-columns:60px 52px 46px 1fr;gap:6px;font-size:10px;color:var(--muted);margin-bottom:8px">
       <span>情景</span><span>收益率</span><span>权重%</span><span style="text-align:right">终值</span>
     </div>
     <div id="scenarios-list"></div>
@@ -351,7 +361,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
       <span style="font-size:18px;font-weight:700" id="st-ev2">$0</span>
     </div>
   </div>
-
   <div class="card">
     <div class="card-title">AI 持仓分析</div>
     <button class="btn btn-primary" onclick="getAiAnalysis()" id="ai-btn">获取 AI 分析（联网）</button>
@@ -359,25 +368,107 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
   </div>
 </div>
 
-<!-- ══ BUFFER ══ -->
-<div id="page-buffer" class="page">
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-      <span style="font-size:14px;font-weight:700">脱产保障目标</span>
+<!-- ══ CONFIG（原 Buffer）══ -->
+<div id="page-config" class="page">
+
+  <!-- 脱产保障目标设定 -->
+  <div class="cfg-section">
+    <div class="cfg-section-title">脱产保障设定</div>
+    <div class="cfg-row">
+      <div><div class="cfg-label">目标月数</div><div class="cfg-sublabel">脱产保障总月数</div></div>
       <div style="display:flex;align-items:center;gap:6px">
-        <input type="number" id="buf-target" value="12" min="1" max="60"
-          style="width:44px;text-align:center;border:1.5px solid var(--border);border-radius:6px;font-size:15px;font-weight:700;padding:3px"
-          oninput="renderBuffer()">
+        <input type="number" id="cfg-target-months" value="12" min="1" max="60"
+          style="width:48px;text-align:center;border:1.5px solid var(--border);border-radius:6px;font-size:16px;font-weight:700;padding:4px"
+          oninput="renderConfig()">
         <span style="font-size:13px;color:var(--muted)">个月</span>
       </div>
     </div>
-    <div class="progress-wrap" id="buf-all"></div>
-    <div class="progress-wrap" id="buf-fixed"></div>
+    <div class="cfg-row">
+      <div><div class="cfg-label">月均脱产开销</div><div class="cfg-sublabel" id="cfg-monthly-label">来自预算合计</div></div>
+      <div class="cfg-value" id="cfg-monthly-exp">$0</div>
+    </div>
   </div>
-  <div class="card">
-    <div class="card-title">月开销构成</div>
-    <div id="buf-breakdown"></div>
+
+  <!-- 现有存款 -->
+  <div class="cfg-section">
+    <div class="cfg-section-title">现有存款</div>
+    <div class="cfg-row">
+      <div><div class="cfg-label">现金账户总余额</div><div class="cfg-sublabel">来自存款页账户数据</div></div>
+      <div class="cfg-value green" id="cfg-total-cash">$0</div>
+    </div>
+    <div class="cfg-row">
+      <div><div class="cfg-label">股市本金</div><div class="cfg-sublabel">来自股市页设定</div></div>
+      <div class="cfg-value" id="cfg-stock-principal">$0</div>
+    </div>
+    <div class="cfg-row" style="border-bottom:none">
+      <div><div class="cfg-label" style="font-weight:700">总资产</div></div>
+      <div class="cfg-value" id="cfg-total-assets">$0</div>
+    </div>
   </div>
+
+  <!-- 核心安全垫 -->
+  <div class="cfg-section">
+    <div class="cfg-section-title">核心安全垫（现金储备）</div>
+    <div class="cfg-row">
+      <div><div class="cfg-label">目标金额</div><div class="cfg-sublabel">2 个月必要生活费</div></div>
+      <div class="cfg-value amber" id="cfg-core-target">$0</div>
+    </div>
+    <div class="cfg-row">
+      <div><div class="cfg-label">当前状态</div></div>
+      <div class="cfg-value" id="cfg-core-status">—</div>
+    </div>
+    <div class="cfg-bar-wrap">
+      <div class="cfg-bar"><div class="cfg-bar-fill" id="cfg-core-bar" style="background:var(--amber)"></div></div>
+    </div>
+  </div>
+
+  <!-- 防御性备用金 -->
+  <div class="cfg-section">
+    <div class="cfg-section-title">防御性备用金（定存）</div>
+    <div class="cfg-row">
+      <div><div class="cfg-label">目标金额</div><div class="cfg-sublabel">3 个月必要生活费</div></div>
+      <div class="cfg-value amber" id="cfg-def-target">$0</div>
+    </div>
+    <div class="cfg-row">
+      <div>
+        <div class="cfg-label">定存余额</div>
+        <div class="cfg-sublabel">手动输入</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:4px">
+        <span style="font-size:13px;color:var(--muted)">$</span>
+        <input type="number" id="cfg-cd-balance" placeholder="0" step="100" inputmode="decimal"
+          style="width:100px;padding:4px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:14px;font-weight:700;text-align:right"
+          oninput="renderConfig()">
+      </div>
+    </div>
+    <div class="cfg-bar-wrap">
+      <div class="cfg-bar"><div class="cfg-bar-fill" id="cfg-def-bar" style="background:var(--blue)"></div></div>
+    </div>
+  </div>
+
+  <!-- 资金分配 -->
+  <div class="cfg-section">
+    <div class="cfg-section-title">资金分配总览</div>
+    <div class="cfg-row">
+      <div><div class="cfg-label">核心安全垫（已存）</div></div>
+      <div class="cfg-value" id="cfg-alloc-core">$0</div>
+    </div>
+    <div class="cfg-row">
+      <div><div class="cfg-label">防御性备用金（定存）</div></div>
+      <div class="cfg-value" id="cfg-alloc-def">$0</div>
+    </div>
+    <div class="cfg-row">
+      <div><div class="cfg-label">股市本金</div></div>
+      <div class="cfg-value" id="cfg-alloc-stock">$0</div>
+    </div>
+    <div class="cfg-row" style="border-top:2px solid var(--border);margin-top:4px;padding-top:8px">
+      <div><div class="cfg-label" style="font-weight:700;color:var(--green)">剩余可支配存款</div>
+        <div class="cfg-sublabel">可用于加仓或其他用途</div></div>
+      <div class="cfg-value green" style="font-size:18px" id="cfg-remaining">$0</div>
+    </div>
+    <button class="btn btn-primary" style="margin-top:14px" onclick="saveConfigPage()">保存配置</button>
+  </div>
+
 </div>
 
 <!-- ══ BUDGET ══ -->
@@ -396,402 +487,463 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
 </div>
 
 </div><!-- /content -->
-
 <div id="toast"></div>
 
 <script>
-// ══════════════════════════════════════════════════════
-// CONFIG & STATE
-// ══════════════════════════════════════════════════════
+// ══════════════════ CONFIG ══════════════════
+const PAYCHECK_AMOUNT = 2205.90;
+const PAYCHECK_ANCHOR = new Date('2025-06-26'); // next payday
+const BIWEEK_MS = 14 * 24 * 60 * 60 * 1000;
+
 const CARDS_CFG = [
-  {id:'discover',name:'Discover',color:'#E8A900',cycleStart:7,cycleEnd:6,payDay:3,payOff:2},
-  {id:'chase',   name:'Chase',   color:'#117ACA',cycleStart:9,cycleEnd:8,payDay:5,payOff:2},
-  {id:'amex',    name:'Amex',    color:'#2E7D32',cycleStart:2,cycleEnd:2,payDay:27,payOff:1},
-  {id:'cap1',    name:'Capital One',color:'#C62828',cycleStart:14,cycleEnd:13,payDay:8,payOff:2},
+  {id:'discover',  name:'Discover',    color:'#E8A900',cycleStart:7, cycleEnd:6, payDay:3, payOff:2},
+  {id:'chase',     name:'Chase',       color:'#117ACA',cycleStart:9, cycleEnd:8, payDay:5, payOff:2},
+  {id:'amex',      name:'Amex',        color:'#2E7D32',cycleStart:2, cycleEnd:2, payDay:27,payOff:1},
+  {id:'cap1',      name:'Capital One', color:'#C62828',cycleStart:14,cycleEnd:13,payDay:8, payOff:2},
 ];
 
 const DEFAULT_BUDGET = {
   'grocery':400,'utility':117,'个人购物':50,'交通':230.42,
   '兴趣班':129.2,'其他':25,'房租':1301,'旅行':100,'社交消费':250,'话费':33
 };
-
-const DEFAULT_ACCOUNTS = {
-  'Chase Checking':269.91,'Amex Checking':149.13,'Amex HYSA':18056.31
-};
-
+const DEFAULT_ACCOUNTS = {'Chase Checking':269.91,'Amex Checking':149.13,'Amex HYSA':18056.31};
 const DEFAULT_SCENARIOS = [
   {name:'牛市',ret:25,w:30},{name:'温和增长',ret:12,w:40},
   {name:'震荡持平',ret:2,w:20},{name:'熊市',ret:-15,w:10}
 ];
 
 let state = {
-  transactions: [],
+  transactions: [],   // expenses: {date,amount,category,desc,channel,card,type}
+  incomes: [],        // incomes:  {date,amount,type,desc}
   budget: {...DEFAULT_BUDGET},
   accounts: {...DEFAULT_ACCOUNTS},
   principal: 50000,
   holdings: [{t:'NVDA',a:20000},{t:'AAPL',a:15000},{t:'SPY',a:15000}],
   scenarios: DEFAULT_SCENARIOS.map(s=>({...s})),
-  income: 4452.25,
-  lastSync: null
+  cdBalance: 0,       // Certificate of Deposit balance (防御性备用金)
+  targetMonths: 12,
 };
-
-// GitHub config
 let GH = {token:'',owner:'',repo:''};
+let shas = {};
 
-function loadConfig(){
-  GH.token = localStorage.getItem('gh_token') || '';
-  GH.owner = localStorage.getItem('gh_owner') || '';
-  GH.repo  = localStorage.getItem('gh_repo')  || '';
-  if(GH.token && GH.owner && GH.repo){
-    document.getElementById('setup').style.display='none';
-    loadFromGitHub();
-  }
+// ══════════════════ PAYDAY UTILS ══════════════════
+function allPaydays() {
+  const days = [];
+  // go back ~2 years and forward ~1 year
+  const start = new Date(PAYCHECK_ANCHOR); start.setFullYear(start.getFullYear()-2);
+  const end   = new Date(PAYCHECK_ANCHOR); end.setFullYear(end.getFullYear()+1);
+  let d = new Date(PAYCHECK_ANCHOR);
+  // rewind to start
+  while(d > start) d = new Date(d - BIWEEK_MS);
+  d = new Date(d.getTime() + BIWEEK_MS);
+  while(d <= end) { days.push(new Date(d)); d = new Date(d.getTime() + BIWEEK_MS); }
+  return days;
 }
 
+function nextPayday() {
+  const now = new Date(); now.setHours(0,0,0,0);
+  return allPaydays().find(d=>d>=now) || PAYCHECK_ANCHOR;
+}
+
+function isPayday(dateStr) {
+  return allPaydays().some(d=>d.toISOString().slice(0,10)===dateStr);
+}
+
+// ══════════════════ SETUP / GITHUB ══════════════════
+function loadConfig(){
+  GH.token=localStorage.getItem('gh_token')||'';
+  GH.owner=localStorage.getItem('gh_owner')||'';
+  GH.repo =localStorage.getItem('gh_repo') ||'';
+  if(GH.token&&GH.owner&&GH.repo){
+    document.getElementById('setup').style.display='none';
+    loadFromGitHub();
+  } else {
+    renderPaycheckNotice();
+  }
+}
 function saveSetup(){
-  const t = document.getElementById('setup-token').value.trim();
-  const o = document.getElementById('setup-owner').value.trim();
-  const r = document.getElementById('setup-repo').value.trim();
+  const t=document.getElementById('setup-token').value.trim();
+  const o=document.getElementById('setup-owner').value.trim();
+  const r=document.getElementById('setup-repo').value.trim();
   if(!t||!o||!r){toast('请填写所有字段');return;}
-  GH.token=t; GH.owner=o; GH.repo=r;
-  localStorage.setItem('gh_token',t);
-  localStorage.setItem('gh_owner',o);
-  localStorage.setItem('gh_repo',r);
+  GH.token=t;GH.owner=o;GH.repo=r;
+  localStorage.setItem('gh_token',t);localStorage.setItem('gh_owner',o);localStorage.setItem('gh_repo',r);
   document.getElementById('setup').style.display='none';
   toast('正在连接 GitHub…');
   loadFromGitHub();
 }
-
-// ══════════════════════════════════════════════════════
-// GITHUB API
-// ══════════════════════════════════════════════════════
-const API = 'https://api.github.com';
-
+const API='https://api.github.com';
 async function ghGet(path){
-  const r = await fetch(`${API}/repos/${GH.owner}/${GH.repo}/contents/${path}`,{
-    headers:{Authorization:`token ${GH.token}`,Accept:'application/vnd.github.v3+json'}
-  });
-  if(r.status===404) return null;
-  if(!r.ok) throw new Error(`GitHub ${r.status}`);
-  const j = await r.json();
-  return {content: JSON.parse(atob(j.content.replace(/\n/g,''))), sha: j.sha};
+  const r=await fetch(`${API}/repos/${GH.owner}/${GH.repo}/contents/${path}`,
+    {headers:{Authorization:`token ${GH.token}`,Accept:'application/vnd.github.v3+json'}});
+  if(r.status===404)return null;
+  if(!r.ok)throw new Error(`GitHub ${r.status}`);
+  const j=await r.json();
+  return{content:JSON.parse(atob(j.content.replace(/\n/g,''))),sha:j.sha};
 }
-
-async function ghPut(path, content, sha){
-  const body = {
-    message: `update ${path}`,
-    content: btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2)))),
-  };
-  if(sha) body.sha = sha;
-  const r = await fetch(`${API}/repos/${GH.owner}/${GH.repo}/contents/${path}`,{
-    method:'PUT',
-    headers:{Authorization:`token ${GH.token}`,Accept:'application/vnd.github.v3+json','Content-Type':'application/json'},
-    body: JSON.stringify(body)
-  });
+async function ghPut(path,content,sha){
+  const body={message:`update ${path}`,content:btoa(unescape(encodeURIComponent(JSON.stringify(content,null,2))))};
+  if(sha)body.sha=sha;
+  const r=await fetch(`${API}/repos/${GH.owner}/${GH.repo}/contents/${path}`,
+    {method:'PUT',headers:{Authorization:`token ${GH.token}`,Accept:'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});
   if(!r.ok){const e=await r.json();throw new Error(e.message);}
-  return await r.json();
+  return r.json();
 }
-
-let shas = {};
-
 async function loadFromGitHub(){
-  const btn = document.getElementById('sync-btn');
-  btn.textContent='同步中…'; btn.classList.add('syncing');
-  try {
-    const [txRes, cfgRes] = await Promise.all([
-      ghGet('transactions.json'),
-      ghGet('config.json')
-    ]);
-    if(txRes){
-      state.transactions = txRes.content;
-      shas.tx = txRes.sha;
-    }
+  const btn=document.getElementById('sync-btn');
+  btn.textContent='同步中…';btn.classList.add('syncing');
+  try{
+    const [txRes,incRes,cfgRes]=await Promise.all([
+      ghGet('transactions.json'),ghGet('incomes.json'),ghGet('config.json')]);
+    if(txRes){state.transactions=txRes.content;shas.tx=txRes.sha;}
+    if(incRes){state.incomes=incRes.content;shas.inc=incRes.sha;}
     if(cfgRes){
-      const c = cfgRes.content;
-      if(c.budget)    state.budget    = c.budget;
-      if(c.accounts)  state.accounts  = c.accounts;
-      if(c.principal) state.principal = c.principal;
-      if(c.holdings)  state.holdings  = c.holdings;
-      if(c.scenarios) state.scenarios = c.scenarios;
-      if(c.income)    state.income    = c.income;
-      shas.cfg = cfgRes.sha;
+      const c=cfgRes.content;
+      if(c.budget)    state.budget=c.budget;
+      if(c.accounts)  state.accounts=c.accounts;
+      if(c.principal) state.principal=c.principal;
+      if(c.holdings)  state.holdings=c.holdings;
+      if(c.scenarios) state.scenarios=c.scenarios;
+      if(c.cdBalance!=null) state.cdBalance=c.cdBalance;
+      if(c.targetMonths) state.targetMonths=c.targetMonths;
+      shas.cfg=cfgRes.sha;
     }
-    state.lastSync = new Date();
-    btn.textContent = '↻ ' + new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});
+    btn.textContent='↻ '+new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});
     toast('数据已同步 ✓');
     renderAll();
-  } catch(e){
-    btn.textContent='↻ 同步';
-    toast('同步失败：'+e.message);
-  }
+  }catch(e){btn.textContent='↻ 同步';toast('同步失败：'+e.message);}
   btn.classList.remove('syncing');
 }
-
-async function syncData(){
-  await loadFromGitHub();
-}
-
+async function syncData(){await loadFromGitHub();}
 async function saveTransactions(){
-  try{
-    const r = await ghPut('transactions.json', state.transactions, shas.tx);
-    shas.tx = r.content.sha;
-  }catch(e){toast('保存失败：'+e.message);}
+  try{const r=await ghPut('transactions.json',state.transactions,shas.tx);shas.tx=r.content.sha;}
+  catch(e){toast('保存失败：'+e.message);}
 }
-
+async function saveIncomes(){
+  try{const r=await ghPut('incomes.json',state.incomes,shas.inc);shas.inc=r.content.sha;}
+  catch(e){toast('收入保存失败：'+e.message);}
+}
 async function saveConfig(){
-  const cfg = {
-    budget:state.budget, accounts:state.accounts,
-    principal:state.principal, holdings:state.holdings,
-    scenarios:state.scenarios, income:state.income
-  };
-  try{
-    const r = await ghPut('config.json', cfg, shas.cfg);
-    shas.cfg = r.content.sha;
-  }catch(e){toast('配置保存失败：'+e.message);}
+  const cfg={budget:state.budget,accounts:state.accounts,principal:state.principal,
+    holdings:state.holdings,scenarios:state.scenarios,cdBalance:state.cdBalance,
+    targetMonths:state.targetMonths};
+  try{const r=await ghPut('config.json',cfg,shas.cfg);shas.cfg=r.content.sha;}
+  catch(e){toast('配置保存失败：'+e.message);}
 }
 
-// ══════════════════════════════════════════════════════
-// RENDER ALL
-// ══════════════════════════════════════════════════════
-function renderAll(){
-  renderSpending();
-  renderCards();
-  renderSavings();
-  renderStocks();
-  renderBuffer();
-  renderBudget();
-  populateEntryForm();
-  renderAllList();
-}
-
-// ══ HELPERS ══
+// ══════════════════ HELPERS ══════════════════
 function fmt(n){return '$'+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function fmtS(n){return '$'+Math.round(Math.abs(n)).toLocaleString('en-US');}
+function todayStr(){return new Date().toISOString().slice(0,10);}
+function currentYM(){return new Date().toISOString().slice(0,7);}
 
-function currentMonthTx(){
-  const now = new Date();
-  const ym = now.toISOString().slice(0,7);
-  return state.transactions.filter(t=>t.date && t.date.startsWith(ym) && t.amount > 0);
+function currentMonthExpenses(){
+  const ym=currentYM();
+  return state.transactions.filter(t=>t.date&&t.date.startsWith(ym)&&t.amount>0);
+}
+function currentMonthIncomes(){
+  const ym=currentYM();
+  return state.incomes.filter(i=>i.date&&i.date.startsWith(ym));
+}
+function categoryTotals(txs){
+  const m={};txs.forEach(t=>{m[t.category]=(m[t.category]||0)+t.amount;});return m;
+}
+function totalMonthlyIncome(){
+  return currentMonthIncomes().reduce((s,i)=>s+i.amount,0);
 }
 
-function categoryTotals(txs){
-  const m={};
-  txs.forEach(t=>{m[t.category]=(m[t.category]||0)+t.amount;});
-  return m;
+// ══════════════════ RENDER ALL ══════════════════
+function renderAll(){
+  renderSpending();renderCards();renderSavings();
+  renderStocks();renderConfig();renderBudget();
+  populateEntryForm();renderAllList();renderPaycheckNotice();
+}
+
+// ══ PAYCHECK NOTICE ══
+function renderPaycheckNotice(){
+  const el=document.getElementById('paycheck-notice');
+  if(!el)return;
+  const next=nextPayday();
+  const days=Math.ceil((next-new Date())/86400000);
+  const todayIsPayday=isPayday(todayStr());
+  if(todayIsPayday){
+    el.innerHTML=`<strong>🎉 今天是发薪日！</strong> 点击下方"保存收入"录入 ${fmt(PAYCHECK_AMOUNT)} 薪资。`;
+    document.getElementById('inc-amount').value=PAYCHECK_AMOUNT;
+    document.getElementById('inc-type').value='薪资';
+  } else {
+    el.innerHTML=`下次发薪日：<strong>${next.toLocaleDateString('zh-CN',{month:'long',day:'numeric'})}</strong>，还有 <strong>${days} 天</strong>（${fmt(PAYCHECK_AMOUNT)}）`;
+  }
 }
 
 // ══ SPENDING ══
 function renderSpending(){
-  const txs = currentMonthTx();
-  const totals = categoryTotals(txs);
-  const total = Object.values(totals).reduce((a,b)=>a+b,0);
-  const budgetTotal = Object.values(state.budget).reduce((a,b)=>a+b,0);
-
-  document.getElementById('s-total').textContent = fmt(total);
-  document.getElementById('s-month').textContent = new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long'});
-  const remain = budgetTotal - total;
-  const remEl = document.getElementById('s-remain');
-  remEl.textContent = fmt(remain);
-  remEl.className = 'stat-value ' + (remain>=0?'green':'red');
-
-  // bars
-  const bars = document.getElementById('spending-bars');
-  bars.innerHTML = '';
+  const txs=currentMonthExpenses();
+  const totals=categoryTotals(txs);
+  const total=Object.values(totals).reduce((a,b)=>a+b,0);
+  const budgetTotal=Object.values(state.budget).reduce((a,b)=>a+b,0);
+  document.getElementById('s-total').textContent=fmt(total);
+  document.getElementById('s-month').textContent=new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long'});
+  const remain=budgetTotal-total;
+  const re=document.getElementById('s-remain');
+  re.textContent=fmt(remain);re.className='stat-value '+(remain>=0?'green':'red');
+  const bars=document.getElementById('spending-bars');bars.innerHTML='';
   Object.entries(state.budget).sort((a,b)=>b[1]-a[1]).forEach(([cat,bud])=>{
-    const actual = totals[cat]||0;
-    const pct = bud>0 ? Math.min((actual/bud)*100,100) : 0;
-    const over = actual>bud && bud>0;
-    bars.innerHTML += `
-      <div class="bar-row">
-        <div class="bar-label">${cat}</div>
-        <div class="bar-track ${over?'bar-over':''}">
-          <div class="bar-fill ${over?'bar-fill-over':'bar-fill-ok'}" style="width:${pct}%">
-            ${actual>0?`<span>${fmt(actual)}</span>`:''}
-          </div>
-          <div class="bar-budget-line" style="left:${bud>0?Math.min((bud/(bud*1.3))*100,100):'100'}%"></div>
+    const actual=totals[cat]||0;
+    const pct=bud>0?Math.min((actual/bud)*100,100):0;
+    const over=actual>bud&&bud>0;
+    bars.innerHTML+=`<div class="bar-row">
+      <div class="bar-label">${cat}</div>
+      <div class="bar-track ${over?'bar-over':''}">
+        <div class="bar-fill ${over?'bar-fill-over':'bar-fill-ok'}" style="width:${pct}%">
+          ${actual>0?`<span>${fmt(actual)}</span>`:''}
         </div>
-      </div>`;
+      </div></div>`;
   });
-
-  // recent
-  const list = document.getElementById('recent-list');
-  const recent = [...state.transactions].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,10);
-  list.innerHTML = recent.length ? recent.map(t=>txHtml(t)).join('') : '<div style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0">暂无记录</div>';
+  const list=document.getElementById('recent-list');
+  const recent=[...state.transactions,...state.incomes.map(i=>({...i,_income:true}))]
+    .sort((a,b)=>b.date.localeCompare(a.date)).slice(0,12);
+  list.innerHTML=recent.length?recent.map(t=>txHtml(t)).join(''):'<div style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0">暂无记录</div>';
 }
 
 function txHtml(t){
+  if(t._income){
+    return `<div class="tx-item">
+      <div class="tx-left">
+        <div class="tx-cat">${t.type||'收入'}<span class="income-badge">收入</span></div>
+        <div class="tx-meta">${t.date?.slice(5)||''} · ${t.desc||''}</div>
+      </div>
+      <div class="tx-amount income-color">+${fmt(t.amount)}</div>
+    </div>`;
+  }
   return `<div class="tx-item">
     <div class="tx-left">
       <div class="tx-cat">${t.category}</div>
       <div class="tx-meta">${t.date?.slice(5)||''} · ${t.channel||''}</div>
-      <div class="tx-desc">${t.desc||''}</div>
+      <div style="font-size:11px;color:#9ca3af">${t.desc||''}</div>
     </div>
-    <div class="tx-amount ${t.amount<0?'neg':''}">${t.amount<0?'-':''}${fmt(t.amount)}</div>
+    <div class="tx-amount">${fmt(t.amount)}</div>
   </div>`;
 }
 
 // ══ ENTRY ══
 function populateEntryForm(){
-  // date default today
-  document.getElementById('e-date').value = new Date().toISOString().slice(0,7)+'-'+String(new Date().getDate()).padStart(2,'0');
-  // categories
-  const sel = document.getElementById('e-cat');
-  sel.innerHTML = Object.keys(state.budget).map(c=>`<option>${c}</option>`).join('');
+  const today=todayStr();
+  document.getElementById('e-date').value=today;
+  document.getElementById('inc-date').value=today;
+  const sel=document.getElementById('e-cat');
+  sel.innerHTML=Object.keys(state.budget).map(c=>`<option>${c}</option>`).join('');
 }
 
 function renderAllList(){
-  const list = document.getElementById('all-list');
-  const ym = new Date().toISOString().slice(0,7);
-  const txs = [...state.transactions].filter(t=>t.date?.startsWith(ym))
-    .sort((a,b)=>b.date.localeCompare(a.date));
-  list.innerHTML = txs.length ? txs.map((t,i)=>`
-    <div class="tx-item">
+  const list=document.getElementById('all-list');
+  const ym=currentYM();
+  const expenses=state.transactions.filter(t=>t.date?.startsWith(ym));
+  const incomes=state.incomes.filter(i=>i.date?.startsWith(ym)).map(i=>({...i,_income:true}));
+  const all=[...expenses,...incomes].sort((a,b)=>b.date.localeCompare(a.date));
+  if(!all.length){list.innerHTML='<div style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0">本月暂无记录</div>';return;}
+  list.innerHTML=all.map((t,i)=>{
+    const isInc=!!t._income;
+    return `<div class="tx-item">
       <div class="tx-left">
-        <div class="tx-cat">${t.category}</div>
-        <div class="tx-meta">${t.date?.slice(5)||''} · ${t.channel||''} · ${t.desc||''}</div>
+        <div class="tx-cat">${isInc?t.type:t.category}${isInc?'<span class="income-badge">收入</span>':''}</div>
+        <div class="tx-meta">${t.date?.slice(5)||''} · ${isInc?t.desc||'':t.channel+' · '+(t.desc||'')}</div>
       </div>
       <div style="display:flex;align-items:center;gap:8px">
-        <div class="tx-amount ${t.amount<0?'neg':''}">${t.amount<0?'-':''}${fmt(t.amount)}</div>
-        <button onclick="deleteTransaction(${i})" style="background:#fee2e2;border:none;border-radius:6px;padding:4px 8px;color:var(--red);cursor:pointer;font-size:12px">删</button>
+        <div class="tx-amount ${isInc?'income-color':''}">${isInc?'+':''}${fmt(t.amount)}</div>
+        <button onclick="${isInc?'deleteIncome':'deleteExpense'}(${i},${isInc})"
+          style="background:#fee2e2;border:none;border-radius:6px;padding:4px 8px;color:var(--red);cursor:pointer;font-size:12px">删</button>
       </div>
-    </div>`).join('') : '<div style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0">本月暂无记录</div>';
+    </div>`;
+  }).join('');
+}
+
+async function addIncome(){
+  const date=document.getElementById('inc-date').value;
+  const amount=parseFloat(document.getElementById('inc-amount').value);
+  const type=document.getElementById('inc-type').value;
+  const desc=document.getElementById('inc-desc').value.trim();
+  if(!date||!amount){toast('请填写日期和金额');return;}
+  state.incomes.push({date,amount,type,desc});
+  document.getElementById('inc-amount').value='';
+  document.getElementById('inc-desc').value='';
+  toast('收入已保存，同步中…');
+  renderAll();
+  await saveIncomes();
+  toast('收入已保存 ✓');
 }
 
 async function addTransaction(){
-  const date = document.getElementById('e-date').value;
-  const amount = parseFloat(document.getElementById('e-amount').value);
-  const category = document.getElementById('e-cat').value;
-  const desc = document.getElementById('e-desc').value.trim();
-  const channel = document.getElementById('e-channel').value;
-  const card = document.getElementById('e-card').value;
+  const date=document.getElementById('e-date').value;
+  const amount=parseFloat(document.getElementById('e-amount').value);
+  const category=document.getElementById('e-cat').value;
+  const desc=document.getElementById('e-desc').value.trim();
+  const channel=document.getElementById('e-channel').value;
+  const card=document.getElementById('e-card').value;
   if(!date||!amount||!category){toast('请填写日期、金额和类别');return;}
-  const tx = {date,amount,category,desc,channel,card,
-    type: Object.keys(DEFAULT_BUDGET).indexOf(category)<5?'固定消费':'活动消费'};
-  state.transactions.push(tx);
+  state.transactions.push({date,amount,category,desc,channel,card,type:channel==='信用卡'?'活动消费':'固定消费'});
   document.getElementById('e-amount').value='';
   document.getElementById('e-desc').value='';
-  toast('已保存，同步中…');
+  toast('支出已保存，同步中…');
   renderAll();
   await saveTransactions();
-  toast('已保存 ✓');
+  toast('支出已保存 ✓');
 }
 
-async function deleteTransaction(idx){
-  const ym = new Date().toISOString().slice(0,7);
-  const monthTxs = state.transactions.filter(t=>t.date?.startsWith(ym));
-  const sorted = [...monthTxs].sort((a,b)=>b.date.localeCompare(a.date));
-  const toDelete = sorted[idx];
-  state.transactions = state.transactions.filter(t=>t!==toDelete);
-  renderAll();
-  await saveTransactions();
+async function deleteExpense(listIdx){
+  const ym=currentYM();
+  const expenses=state.transactions.filter(t=>t.date?.startsWith(ym));
+  const incomes=state.incomes.filter(i=>i.date?.startsWith(ym)).map(i=>({...i,_income:true}));
+  const all=[...expenses,...incomes].sort((a,b)=>b.date.localeCompare(a.date));
+  const item=all[listIdx];
+  if(!item)return;
+  if(item._income){
+    state.incomes=state.incomes.filter(i=>i!==state.incomes.find(x=>x.date===item.date&&x.amount===item.amount&&x.type===item.type));
+    renderAll();await saveIncomes();
+  } else {
+    state.transactions=state.transactions.filter(t=>t!==state.transactions.find(x=>x.date===item.date&&x.amount===item.amount&&x.category===item.category));
+    renderAll();await saveTransactions();
+  }
   toast('已删除 ✓');
 }
 
 // ══ CARDS ══
 function renderCards(){
-  const today = new Date();
-  const list = document.getElementById('cards-list');
-  list.innerHTML = CARDS_CFG.map(card=>{
-    const {start,end,pay} = getCycleDates(card,today);
-    const days = Math.ceil((pay-today)/86400000);
-    const cycleTx = state.transactions.filter(t=>{
-      const d=new Date(t.date); return d>=start&&d<=end&&t.amount>0&&
-      (t.card===card.name||t.channel==='信用卡');
+  const today=new Date();
+  const list=document.getElementById('cards-list');
+  list.innerHTML=CARDS_CFG.map(card=>{
+    const {start,end,pay}=getCycleDates(card,today);
+    const days=Math.ceil((pay-today)/86400000);
+    const cycleTx=state.transactions.filter(t=>{
+      const d=new Date(t.date);
+      return d>=start&&d<=end&&t.amount>0&&(t.card===card.name||t.channel==='信用卡');
     });
-    const total = cycleTx.reduce((s,t)=>s+t.amount,0);
-    const badge = days<=3?`<span class="cc-badge badge-urgent">⚠ ${days}天后付款</span>`:
+    const total=cycleTx.reduce((s,t)=>s+t.amount,0);
+    const badge=days<=3?`<span class="cc-badge badge-urgent">⚠ ${days}天后付款</span>`:
       days<=7?`<span class="cc-badge badge-warn">${days}天后付款</span>`:
               `<span class="cc-badge badge-ok">${days}天后付款</span>`;
-    return `<div class="cc-card" style="border-left-color:${card.color}">
-      <div class="cc-name" style="color:${card.color}">${card.name}</div>
-      ${badge}
-      <div class="cc-grid" style="margin-top:10px">
+    const detailRows=cycleTx.map(t=>`
+      <div class="cc-tx-row">
+        <span style="color:var(--muted)">${t.date?.slice(5)||''}</span>
+        <span>${t.category}</span>
+        <span style="color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.desc||'—'}</span>
+        <span style="font-weight:600;text-align:right">${fmt(t.amount)}</span>
+      </div>`).join('');
+    return `<div class="cc-card" style="border-left-color:${card.color}" onclick="toggleCard('${card.id}')">
+      <div class="cc-header">
+        <span class="cc-name" style="color:${card.color}">${card.name}</span>
+        ${badge}
+      </div>
+      <div class="cc-grid">
         <div><div class="cc-field">账单周期</div>
           <div class="cc-val">${start.getMonth()+1}/${start.getDate()}–${end.getMonth()+1}/${end.getDate()}</div></div>
         <div><div class="cc-field">付款日</div>
           <div class="cc-val">${pay.getMonth()+1}/${pay.getDate()}</div></div>
         <div><div class="cc-field">本期消费</div>
           <div class="cc-val" style="font-size:16px;color:${card.color}">${fmt(total)}</div></div>
-        <div><div class="cc-field">笔数</div>
-          <div class="cc-val">${cycleTx.length} 笔</div></div>
+        <div><div class="cc-field">笔数 · 点击展开</div>
+          <div class="cc-val">${cycleTx.length} 笔 ▾</div></div>
       </div>
-      ${cycleTx.slice(0,4).map(t=>`
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);padding:3px 0;border-top:1px solid var(--border)">
-          <span>${t.date?.slice(5)} ${t.desc||t.category}</span><span>${fmt(t.amount)}</span>
-        </div>`).join('')}
+      <div class="cc-detail" id="cc-detail-${card.id}">
+        <div style="display:grid;grid-template-columns:44px 1fr 1fr auto;gap:6px;font-size:10px;color:var(--muted);padding-bottom:4px;border-bottom:1px solid var(--border);margin-bottom:2px">
+          <span>日期</span><span>分类</span><span>描述</span><span style="text-align:right">金额</span>
+        </div>
+        ${detailRows||'<div style="font-size:12px;color:var(--muted);padding:8px 0;text-align:center">本周期暂无记录</div>'}
+      </div>
     </div>`;
   }).join('');
+}
+
+function toggleCard(id){
+  const el=document.getElementById('cc-detail-'+id);
+  el.classList.toggle('open');
 }
 
 function getCycleDates(card,today){
   const y=today.getFullYear(),m=today.getMonth()+1,d=today.getDate();
   let start,end,pay;
   if(d>=card.cycleStart){
-    start=new Date(y,m-1,card.cycleStart);
-    end=new Date(y,m,card.cycleEnd);
-    const pm=m+card.payOff;
-    pay=new Date(y+(pm>12?1:0),(pm-1)%12,card.payDay);
+    start=new Date(y,m-1,card.cycleStart);end=new Date(y,m,card.cycleEnd);
+    const pm=m+card.payOff;pay=new Date(y+(pm>12?1:0),(pm-1)%12,card.payDay);
   } else {
-    start=new Date(y,m-2,card.cycleStart);
-    end=new Date(y,m-1,card.cycleEnd);
-    const pm=m+card.payOff-1;
-    pay=new Date(y+(pm>12?1:0),(pm-1)%12,card.payDay);
+    start=new Date(y,m-2,card.cycleStart);end=new Date(y,m-1,card.cycleEnd);
+    const pm=m+card.payOff-1;pay=new Date(y+(pm>12?1:0),(pm-1)%12,card.payDay);
   }
   return{start,end,pay};
 }
 
 // ══ SAVINGS ══
 function renderSavings(){
-  const total = Object.values(state.accounts).reduce((a,b)=>a+b,0);
-  document.getElementById('sv-cash').textContent = fmtS(total);
-  const budgetTotal = Object.values(state.budget).reduce((a,b)=>a+b,0);
-  const spent = currentMonthTx().reduce((a,t)=>a+t.amount,0);
-  const saved = state.income - spent;
-  document.getElementById('sv-saved').textContent = fmt(saved);
+  const ym=currentYM();
+  const monthIncome=totalMonthlyIncome();
+  // 现金储蓄 = 当月收入 - 当月储蓄卡支出
+  const debitSpend=state.transactions
+    .filter(t=>t.date?.startsWith(ym)&&t.amount>0&&t.channel==='储蓄卡')
+    .reduce((s,t)=>s+t.amount,0);
+  // 实际储蓄 = 当月收入 - 全部支出
+  const allSpend=state.transactions
+    .filter(t=>t.date?.startsWith(ym)&&t.amount>0)
+    .reduce((s,t)=>s+t.amount,0);
+  const cashSaving=monthIncome-debitSpend;
+  const realSaving=monthIncome-allSpend;
 
-  // accounts display
-  const al = document.getElementById('accounts-list');
-  al.innerHTML = Object.entries(state.accounts).map(([name,val])=>`
+  const cs=document.getElementById('sv-cash-saving');
+  cs.textContent=fmt(cashSaving);cs.className='stat-value '+(cashSaving>=0?'green':'red');
+  const rs=document.getElementById('sv-real-saving');
+  rs.textContent=fmt(realSaving);rs.className='stat-value '+(realSaving>=0?'green':'red');
+  document.getElementById('sv-income').textContent=fmt(monthIncome);
+
+  // income sub: breakdown
+  const incBreakdown=currentMonthIncomes().map(i=>i.type).filter((v,i,a)=>a.indexOf(v)===i).join(' + ');
+  document.getElementById('sv-income-sub').textContent=incBreakdown||'暂无收入记录';
+
+  const totalCash=Object.values(state.accounts).reduce((a,b)=>a+b,0);
+  document.getElementById('sv-total-cash').textContent=fmtS(totalCash);
+
+  // income list
+  const incList=document.getElementById('sv-income-list');
+  const incomes=currentMonthIncomes().sort((a,b)=>b.date.localeCompare(a.date));
+  incList.innerHTML=incomes.length?incomes.map(i=>`
+    <div class="tx-item">
+      <div class="tx-left">
+        <div class="tx-cat">${i.type}<span class="income-badge">收入</span></div>
+        <div class="tx-meta">${i.date?.slice(5)||''} ${i.desc?'· '+i.desc:''}</div>
+      </div>
+      <div class="tx-amount income-color">+${fmt(i.amount)}</div>
+    </div>`).join(''):'<div style="font-size:13px;color:var(--muted);text-align:center;padding:12px 0">本月暂无收入记录<br><span style="font-size:11px">在录入页添加薪资或其他收入</span></div>';
+
+  // accounts
+  const al=document.getElementById('accounts-list');
+  al.innerHTML=Object.entries(state.accounts).map(([name,val])=>`
     <div class="tx-item">
       <span style="font-size:13px">${name}</span>
       <span style="font-size:15px;font-weight:700;color:var(--green)">${fmt(val)}</span>
     </div>`).join('');
-
-  // accounts edit
-  const ae = document.getElementById('accounts-edit');
-  ae.innerHTML = Object.entries(state.accounts).map(([name,val])=>`
+  const ae=document.getElementById('accounts-edit');
+  ae.innerHTML=Object.entries(state.accounts).map(([name,val])=>`
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
       <span style="flex:1;font-size:13px">${name}</span>
       <input type="number" value="${val}" step="0.01" data-acct="${name}"
         style="width:110px;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;text-align:right">
     </div>`).join('');
 }
-
 async function saveAccounts(){
-  document.querySelectorAll('[data-acct]').forEach(inp=>{
-    state.accounts[inp.dataset.acct] = parseFloat(inp.value)||0;
-  });
-  renderSavings();
-  await saveConfig();
-  toast('账户余额已保存 ✓');
+  document.querySelectorAll('[data-acct]').forEach(inp=>{state.accounts[inp.dataset.acct]=parseFloat(inp.value)||0;});
+  renderSavings();renderConfig();await saveConfig();toast('账户余额已保存 ✓');
 }
 
 // ══ STOCKS ══
 function renderStocks(){
-  const p = parseFloat(document.getElementById('st-principal').value) || state.principal;
-  state.principal = p;
-  const totalW = state.scenarios.reduce((s,sc)=>s+sc.w,0)||1;
-  const ev = state.scenarios.reduce((sum,sc)=>sum + p*(1+sc.ret/100)*sc.w/totalW, 0);
-  const ret = ev - p;
-  document.getElementById('st-ev').textContent  = fmtS(ev);
-  document.getElementById('st-ev2').textContent = fmtS(ev);
-  const retEl = document.getElementById('st-ret');
-  retEl.textContent = (ret>=0?'+':'-') + fmt(ret);
-  retEl.className = 'stat-value ' + (ret>=0?'green':'red');
-
-  // holdings
-  const hl = document.getElementById('holdings-list');
-  hl.innerHTML = state.holdings.map((h,i)=>`
+  const p=parseFloat(document.getElementById('st-principal').value)||state.principal;
+  state.principal=p;
+  const totalW=state.scenarios.reduce((s,sc)=>s+sc.w,0)||1;
+  const ev=state.scenarios.reduce((sum,sc)=>sum+p*(1+sc.ret/100)*sc.w/totalW,0);
+  const ret=ev-p;
+  document.getElementById('st-ev').textContent=fmtS(ev);
+  document.getElementById('st-ev2').textContent=fmtS(ev);
+  const re=document.getElementById('st-ret');
+  re.textContent=(ret>=0?'+':'-')+fmt(ret);re.className='stat-value '+(ret>=0?'green':'red');
+  const hl=document.getElementById('holdings-list');
+  hl.innerHTML=state.holdings.map((h,i)=>`
     <div style="display:grid;grid-template-columns:70px 1fr 50px 28px;gap:6px;align-items:center;margin-bottom:8px">
       <input value="${h.t}" onchange="state.holdings[${i}].t=this.value"
         style="padding:4px 6px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-weight:700;text-transform:uppercase">
@@ -801,11 +953,9 @@ function renderStocks(){
       <button onclick="state.holdings.splice(${i},1);renderStocks()"
         style="background:#fee2e2;border:none;border-radius:6px;color:var(--red);font-size:14px;cursor:pointer;padding:4px">×</button>
     </div>`).join('');
-
-  // scenarios
-  const sl = document.getElementById('scenarios-list');
-  sl.innerHTML = state.scenarios.map((sc,i)=>{
-    const fv = p*(1+sc.ret/100);
+  const sl=document.getElementById('scenarios-list');
+  sl.innerHTML=state.scenarios.map((sc,i)=>{
+    const fv=p*(1+sc.ret/100);
     return `<div class="scenario-row">
       <input class="sc-input" value="${sc.name}" onchange="state.scenarios[${i}].name=this.value">
       <div style="position:relative">
@@ -821,72 +971,76 @@ function renderStocks(){
       </div>
     </div>`;
   }).join('');
-
-  const wsum = totalW;
-  document.getElementById('sc-title').textContent = `情景分析 ${wsum!==100?'⚠ 权重合计'+wsum+'%':'✓'}`;
+  document.getElementById('sc-title').textContent=`情景分析 ${totalW!==100?'⚠ 权重合计'+totalW+'%':'✓'}`;
 }
-
-function addHolding(){state.holdings.push({t:'NEW',a:0});renderStocks();}
-
+function addHolding(){state.holdings.push({t:'',a:0});renderStocks();}
 async function getAiAnalysis(){
-  const btn=document.getElementById('ai-btn');
-  const res=document.getElementById('ai-result');
-  btn.textContent='AI 分析中…'; btn.disabled=true;
+  const btn=document.getElementById('ai-btn');const res=document.getElementById('ai-result');
+  btn.textContent='AI 分析中…';btn.disabled=true;
   const p=state.principal;
   const holdStr=state.holdings.map(h=>`${h.t}: $${h.a} (${p>0?((h.a/p)*100).toFixed(1):'0'}%)`).join(', ');
   const scStr=state.scenarios.map(s=>`${s.name}(${s.ret>0?'+':''}${s.ret}%,权重${s.w}%)`).join('; ');
   const totalW=state.scenarios.reduce((s,sc)=>s+sc.w,0)||1;
   const ev=state.scenarios.reduce((sum,sc)=>sum+p*(1+sc.ret/100)*sc.w/totalW,0);
   try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',headers:{'Content-Type':'application/json'},
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
+      headers:{'Content-Type':'application/json'},
       body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,
         tools:[{type:'web_search_20250305',name:'web_search'}],
-        messages:[{role:'user',content:`你是量化投资分析师。持仓：总本金$${p.toLocaleString()}，${holdStr}。情景：${scStr}。期望总值$${Math.round(ev).toLocaleString()}。结合当前宏观环境（美联储、科技股、AI趋势），中文200字内分析：1.宏观对持仓影响 2.情景合理性 3.集中度风险`}]})
-    });
+        messages:[{role:'user',content:`你是量化投资分析师。持仓：总本金$${p.toLocaleString()}，${holdStr}。情景：${scStr}。期望总值$${Math.round(ev).toLocaleString()}。结合当前宏观环境（美联储、科技股、AI趋势），中文200字内分析：1.宏观对持仓影响 2.情景合理性 3.集中度风险`}]})});
     const d=await r.json();
-    const text=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('')||'分析不可用';
-    res.textContent=text;
+    res.textContent=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('')||'分析不可用';
   }catch(e){res.textContent='AI 分析失败，请稍后再试。';}
   btn.textContent='重新分析';btn.disabled=false;
 }
 
-// ══ BUFFER ══
-function renderBuffer(){
-  const target = parseInt(document.getElementById('buf-target').value)||12;
-  const cash = Object.values(state.accounts).reduce((a,b)=>a+b,0);
-  const totalExp = Object.values(state.budget).reduce((a,b)=>a+b,0);
-  const fixedCats=['房租','utility','话费','交通','grocery'];
-  const fixedExp = fixedCats.reduce((s,c)=>s+(state.budget[c]||0),0);
+// ══ CONFIG PAGE ══
+function renderConfig(){
+  const targetMonths=parseInt(document.getElementById('cfg-target-months')?.value)||state.targetMonths||12;
+  const monthlyExp=Object.values(state.budget).reduce((a,b)=>a+b,0);
+  const coreTarget=monthlyExp*2;   // 2个月
+  const defTarget=monthlyExp*3;    // 3个月
+  const totalCash=Object.values(state.accounts).reduce((a,b)=>a+b,0);
+  const cdBal=parseFloat(document.getElementById('cfg-cd-balance')?.value)||state.cdBalance||0;
+  const stockPrincipal=state.principal||0;
 
-  function progressHtml(id,label,monthly,months){
-    const pct=Math.min((months/target)*100,100);
-    const ok=months>=target;
-    const color=ok?'#2e7d32':months>=target*0.6?'#e8a900':'#c62828';
-    return `<div class="progress-wrap">
-      <div class="progress-label">
-        <span style="font-size:12px">${label} <span style="color:var(--muted)">${fmt(monthly)}/月</span></span>
-        <span style="font-weight:700;color:${color}">${months.toFixed(1)} 月</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress-fill" style="width:${pct}%;background:${color}"></div>
-      </div>
-      <div style="font-size:10px;color:var(--muted);margin-top:2px">${Math.round(pct)}% of ${target}-month goal</div>
-    </div>`;
-  }
+  document.getElementById('cfg-monthly-exp').textContent=fmt(monthlyExp);
+  document.getElementById('cfg-total-cash').textContent=fmt(totalCash);
+  document.getElementById('cfg-stock-principal').textContent=fmtS(stockPrincipal);
+  document.getElementById('cfg-total-assets').textContent=fmtS(totalCash+stockPrincipal+cdBal);
 
-  document.getElementById('buf-all').innerHTML=progressHtml('all','全部开销',totalExp,cash/totalExp);
-  document.getElementById('buf-fixed').innerHTML=progressHtml('fixed','仅固定开销',fixedExp,cash/fixedExp);
+  // Core safety pad
+  document.getElementById('cfg-core-target').textContent=fmt(coreTarget);
+  const corePct=Math.min((totalCash/coreTarget)*100,100);
+  const coreStatus=totalCash>=coreTarget?`✓ 已达标 (${(totalCash/coreTarget*100).toFixed(0)}%)`:`不足，还差 ${fmt(coreTarget-totalCash)}`;
+  document.getElementById('cfg-core-status').textContent=coreStatus;
+  document.getElementById('cfg-core-status').className='cfg-value '+(totalCash>=coreTarget?'green':'red');
+  document.getElementById('cfg-core-bar').style.width=corePct+'%';
+  document.getElementById('cfg-core-bar').style.background=totalCash>=coreTarget?'var(--green)':'var(--amber)';
 
-  const bd=document.getElementById('buf-breakdown');
-  bd.innerHTML = Object.entries(state.budget).map(([cat,amt])=>`
-    <div class="tx-item">
-      <span style="font-size:13px">${cat}</span>
-      <span style="font-weight:600;font-size:13px">${fmt(amt)}</span>
-    </div>`).join('') + `
-    <div class="tx-item" style="font-weight:700;font-size:14px">
-      <span>月度合计</span><span>${fmt(totalExp)}</span>
-    </div>`;
+  // Defensive reserve
+  document.getElementById('cfg-def-target').textContent=fmt(defTarget);
+  const defPct=Math.min((cdBal/defTarget)*100,100);
+  document.getElementById('cfg-def-bar').style.width=defPct+'%';
+  document.getElementById('cfg-def-bar').style.background=cdBal>=defTarget?'var(--green)':'var(--blue)';
+
+  // Allocation summary
+  const coreActual=Math.min(totalCash,coreTarget);
+  const remaining=totalCash-coreActual-cdBal-stockPrincipal;
+  document.getElementById('cfg-alloc-core').textContent=fmt(coreActual);
+  document.getElementById('cfg-alloc-def').textContent=fmt(cdBal);
+  document.getElementById('cfg-alloc-stock').textContent=fmtS(stockPrincipal);
+  const remEl=document.getElementById('cfg-remaining');
+  remEl.textContent=fmt(remaining);
+  remEl.className='cfg-value '+(remaining>=0?'green':'red');
+}
+
+async function saveConfigPage(){
+  state.targetMonths=parseInt(document.getElementById('cfg-target-months').value)||12;
+  state.cdBalance=parseFloat(document.getElementById('cfg-cd-balance').value)||0;
+  renderConfig();
+  await saveConfig();
+  toast('配置已保存 ✓');
 }
 
 // ══ BUDGET ══
@@ -894,10 +1048,9 @@ function renderBudget(){
   const total=Object.values(state.budget).reduce((a,b)=>a+b,0);
   document.getElementById('budget-total').textContent=fmt(total);
   const rows=document.getElementById('budget-rows');
-  const txTotals=categoryTotals(currentMonthTx());
+  const txTotals=categoryTotals(currentMonthExpenses());
   rows.innerHTML=Object.entries(state.budget).map(([cat,amt])=>{
-    const actual=txTotals[cat]||0;
-    const over=actual>amt&&actual>0;
+    const actual=txTotals[cat]||0;const over=actual>amt&&actual>0;
     return `<div class="budget-row">
       <span style="font-size:13px">${cat}</span>
       <input class="budget-input" type="number" value="${amt}" data-cat="${cat}"
@@ -908,22 +1061,14 @@ function renderBudget(){
     </div>`;
   }).join('');
 }
-
 function updateBudgetTotal(){
-  let total=0;
-  document.querySelectorAll('[data-cat]').forEach(i=>{total+=parseFloat(i.value)||0;});
-  document.getElementById('budget-total').textContent=fmt(total);
+  let t=0;document.querySelectorAll('[data-cat]').forEach(i=>{t+=parseFloat(i.value)||0;});
+  document.getElementById('budget-total').textContent=fmt(t);
 }
-
 async function saveBudget(){
-  document.querySelectorAll('[data-cat]').forEach(i=>{
-    state.budget[i.dataset.cat]=parseFloat(i.value)||0;
-  });
-  renderAll();
-  await saveConfig();
-  toast('预算已保存 ✓');
+  document.querySelectorAll('[data-cat]').forEach(i=>{state.budget[i.dataset.cat]=parseFloat(i.value)||0;});
+  renderAll();await saveConfig();toast('预算已保存 ✓');
 }
-
 function addBudgetRow(){
   const name=prompt('新类别名称：');
   if(name&&!state.budget[name]){state.budget[name]=0;renderBudget();}
@@ -936,25 +1081,21 @@ function showPage(id){
   document.getElementById('page-'+id).classList.add('active');
   document.querySelector(`.tab[onclick="showPage('${id}')"]`).classList.add('active');
   if(id==='stocks')renderStocks();
-  if(id==='buffer')renderBuffer();
-  if(id==='entry')renderAllList();
+  if(id==='config')renderConfig();
+  if(id==='entry'){renderAllList();renderPaycheckNotice();}
 }
 
 // ══ TOAST ══
 function toast(msg){
   const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
+  t.textContent=msg;t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2200);
 }
 
 // ══ INIT ══
-document.getElementById('st-principal').value = state.principal;
-document.getElementById('st-principal').addEventListener('input',()=>renderStocks());
-
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
-}
-
+document.getElementById('st-principal').value=state.principal;
+document.getElementById('st-principal').addEventListener('input',()=>{renderStocks();renderConfig();});
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 loadConfig();
 </script>
 </body>
