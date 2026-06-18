@@ -230,13 +230,6 @@ dz.addEventListener('drop', e=>{
 });
 
 // ─── CSV Parsing ─────────────────────────────────────
-function excelDateToISO(n){
-  // Excel serial number → ISO date string
-  if(!n||isNaN(n)) return null;
-  const d = new Date((n - 25569) * 86400 * 1000);
-  if(isNaN(d.getTime())) return null;
-  return d.toISOString().slice(0,10);
-}
 
 function parseCSV(text){
   // Handle both \r\n and \n
@@ -272,81 +265,122 @@ function handleFile(file){
   document.getElementById('col-hint').style.display='block';
 }
 
+function parseDate(raw){
+  if(!raw) return null;
+  const s = raw.trim().replace(/\s/g,'');
+
+  // Excel serial number (e.g. 45678)
+  if(/^\d{5,6}$/.test(s)){
+    const n = parseFloat(s);
+    if(n > 40000){
+      const d = new Date((n - 25569) * 86400 * 1000);
+      if(!isNaN(d.getTime())) return d.toISOString().slice(0,10);
+    }
+  }
+
+  // ISO format: 2025-04-15
+  if(/^\d{4}-\d{1,2}-\d{1,2}$/.test(s)){
+    const [y,m,d] = s.split('-').map(Number);
+    return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  }
+
+  // M/D/YYYY or MM/DD/YYYY (US format, e.g. 1/3/2026, 12/31/2025)
+  // D/M/YYYY or DD/MM/YYYY (e.g. 13/01/2026)
+  if(/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(s)){
+    const parts = s.split('/').map(Number);
+    const [a, b, y] = parts;
+    // If first part > 12, must be day (D/M/YYYY)
+    if(a > 12){
+      return `${y}-${String(b).padStart(2,'0')}-${String(a).padStart(2,'0')}`;
+    }
+    // If second part > 12, must be day in M/D/YYYY
+    if(b > 12){
+      return `${y}-${String(a).padStart(2,'0')}-${String(b).padStart(2,'0')}`;
+    }
+    // Ambiguous: assume M/D/YYYY (US format, since this is a US finance app)
+    return `${y}-${String(a).padStart(2,'0')}-${String(b).padStart(2,'0')}`;
+  }
+
+  // YYYY/MM/DD
+  if(/^\d{4}\/\d{1,2}\/\d{1,2}$/.test(s)){
+    const [y,m,d] = s.split('/').map(Number);
+    return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  }
+
+  return null;
+}
+
+function parseAmount(raw){
+  if(!raw) return NaN;
+  // Remove $, spaces, currency symbols, but keep minus sign and handle (123) as negative
+  let s = String(raw).trim();
+  const negative = s.startsWith('(') && s.endsWith(')');
+  s = s.replace(/[\$\s,，()]/g,'').replace(/[^\d.\-]/g,'');
+  const n = parseFloat(s);
+  return negative ? -Math.abs(n) : n;
+}
+
 function processCSV(text){
   const rows = parseCSV(text);
   if(!rows.length){throw new Error('文件为空');}
 
   const expenses = [];
-  const incomes  = [];
   let skipped = 0;
 
-  // Find header row (contains 日期 or date-like first column)
-  let dataStart = 0;
+  // Find header row: look for 日期 in col A
+  let dataStart = 1; // default: skip row 0 as header
   for(let i=0;i<Math.min(5,rows.length);i++){
-    if(rows[i][0]==='日期'||rows[i][0]==='date') {dataStart=i+1; break;}
-    // If first cell is a large number (Excel serial), start from row 1 (skip header at row 0)
-    if(i===0 && rows[1] && !isNaN(parseFloat(rows[1][0])) && parseFloat(rows[1][0])>40000){
-      dataStart=1; break;
-    }
+    const cell = (rows[i][0]||'').trim();
+    if(cell==='日期'||cell==='date'||cell==='Date'){dataStart=i+1;break;}
   }
-
-  // Detect if it's already ISO dates (2025-04-xx) or Excel serials
-  const sampleDate = rows[dataStart]?.[0]||'';
-  const isExcelSerial = !isNaN(parseFloat(sampleDate)) && parseFloat(sampleDate) > 40000;
-  const isISO = /^\d{4}-\d{2}-\d{2}$/.test(sampleDate);
 
   for(let i=dataStart; i<rows.length; i++){
     const row = rows[i];
-    if(!row||row.length<5) continue;
+    if(!row||row.length<2) continue;
 
-    // Col A: date, B: category(细分类), C: type(粗分类), D: desc, E: amount, F: channel
-    const rawDate = row[0]?.trim();
-    const category= row[1]?.trim();
-    const desc    = row[3]?.trim();
-    const rawAmt  = row[4]?.trim();
-    const channel = row[5]?.trim();
+    const rawDate = (row[0]||'').trim();
+    const category= (row[1]||'').trim();
+    const typeStr = (row[2]||'').trim();
+    const desc    = (row[3]||'').trim();
+    const rawAmt  = (row[4]||'').trim();
+    const channel = (row[5]||'').trim();
 
-    if(!rawDate||!category||rawAmt===undefined||rawAmt==='') continue;
-    if(category==='') continue;
+    // Skip rows with no date or no category
+    if(!rawDate||!category) continue;
 
-    // Skip placeholder rows
-    if(desc==='数透表留位') {skipped++;continue;}
-
-    // Parse date
-    let date;
-    if(isExcelSerial&&!isNaN(parseFloat(rawDate))&&parseFloat(rawDate)>40000){
-      date = excelDateToISO(parseFloat(rawDate));
-    } else if(isISO||/^\d{4}[-/]\d{2}[-/]\d{2}$/.test(rawDate)){
-      date = rawDate.replace(/\//g,'-').slice(0,10);
-    } else {
-      skipped++; continue;
-    }
+    // Skip Summary / pivot table overflow rows (col A has text, not a date)
+    const date = parseDate(rawDate);
     if(!date){skipped++;continue;}
 
-    const amount = parseFloat(rawAmt);
-    if(isNaN(amount)){skipped++;continue;}
-    if(amount===0){skipped++;continue;}
+    // Skip placeholder rows
+    if(desc==='数透表留位'){skipped++;continue;}
 
-    // Determine card from channel text
+    // Skip blank or zero amounts
+    if(!rawAmt){skipped++;continue;}
+    const amount = parseAmount(rawAmt);
+    if(isNaN(amount)||amount===0){skipped++;continue;}
+
+    // Determine card
     let card = '';
-    const ch = (channel||'').toLowerCase();
+    const ch = channel.toLowerCase();
     if(ch.includes('discover')) card='Discover';
     else if(ch.includes('chase')) card='Chase';
     else if(ch.includes('amex')&&!ch.includes('saving')) card='Amex';
     else if(ch.includes('capital')) card='Capital One';
 
-    // Treat negative amounts as expense refunds (keep as expense with negative amount)
     expenses.push({
-      date, amount, category,
+      date,
+      amount: Math.abs(amount), // store positive; refunds handled by sign
+      category,
       desc: desc||'',
       channel: channel||'信用卡',
       card,
-      type: row[2]?.trim()||''
+      type: typeStr
     });
   }
 
-  parsed = {expenses, incomes};
-  return {expenses, incomes, skipped};
+  parsed = {expenses, incomes:[]};
+  return {expenses, incomes:[], skipped};
 }
 
 // ─── Preview ─────────────────────────────────────────
