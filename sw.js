@@ -1,5 +1,11 @@
 const CACHE = 'finance-v1';
-const ASSETS = ['/', '/index.html'];
+const ASSETS = [
+  '/finance-app/',
+  '/finance-app/index.html',
+  '/finance-app/manifest.json',
+  '/finance-app/icon-192.png',
+  '/finance-app/icon-512.png',
+];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
@@ -16,10 +22,12 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   if (e.request.url.includes('api.github.com')) return;
   e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request).then(res => {
-      const clone = res.clone();
-      caches.open(CACHE).then(c => c.put(e.request, clone));
-      return res;
-    }))
+    caches.match(e.request).then(cached =>
+      cached || fetch(e.request).then(res => {
+        const clone = res.clone();
+        caches.open(CACHE).then(c => c.put(e.request, clone));
+        return res;
+      })
+    )
   );
 });
